@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		735F20762B753B1700CBC796 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735F20752B753B1700CBC796 /* ProfileViewController.swift */; };
 		7364E7AC2B54F9D700EDD5B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AB2B54F9D700EDD5B0 /* AppDelegate.swift */; };
 		7364E7AE2B54F9D700EDD5B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AD2B54F9D700EDD5B0 /* SceneDelegate.swift */; };
 		7364E7B02B54F9D700EDD5B0 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AF2B54F9D700EDD5B0 /* ImagesListViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		735F20752B753B1700CBC796 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7364E7A82B54F9D700EDD5B0 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7364E7AB2B54F9D700EDD5B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7364E7AD2B54F9D700EDD5B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		735F20742B753ADB00CBC796 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				735F20752B753B1700CBC796 /* ProfileViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		7364E79F2B54F9D700EDD5B0 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 				7364E7AD2B54F9D700EDD5B0 /* SceneDelegate.swift */,
 				7364E7B12B54F9D700EDD5B0 /* Main.storyboard */,
 				73C026232B6ACDAB004F98C0 /* ImagesList */,
+				735F20742B753ADB00CBC796 /* Profile */,
 				73C0261E2B6AB885004F98C0 /* Helpers */,
 				73E21AED2B566E0400105FA4 /* Resources */,
 				7364E7B42B54F9D700EDD5B0 /* ImageFeed.xcdatamodeld */,
@@ -295,6 +306,7 @@
 				73C026202B6AB8A0004F98C0 /* UIColors.swift in Sources */,
 				7364E7B62B54F9D700EDD5B0 /* ImageFeed.xcdatamodeld in Sources */,
 				7364E7AC2B54F9D700EDD5B0 /* AppDelegate.swift in Sources */,
+				735F20762B753B1700CBC796 /* ProfileViewController.swift in Sources */,
 				7364E7AE2B54F9D700EDD5B0 /* SceneDelegate.swift in Sources */,
 				73C026222B6ACD66004F98C0 /* ImagesListCell.swift in Sources */,
 			);
