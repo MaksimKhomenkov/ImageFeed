@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  ImageFeed
-//
-//  Created by Максим Хоменков on 15.01.2024.
-//
-
 import UIKit
 import CoreData
 
