@@ -1,8 +1,6 @@
 import UIKit
 import WebKit
 
-fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
@@ -16,22 +14,29 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     
+    fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadAuthView()
+        loadWebView()
         webView.navigationDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         webView.addObserver(
             self,
             forKeyPath: #keyPath(WKWebView.estimatedProgress),
             options: .new,
             context: nil)
+        updateProgress()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         webView.removeObserver(
             self,
             forKeyPath: #keyPath(WKWebView.estimatedProgress),
@@ -51,7 +56,7 @@ final class WebViewViewController: UIViewController {
         }
     }
     
-    private func loadAuthView() {
+    private func loadWebView() {
         guard var urlComponents = URLComponents(string: UnsplashAuthorizeURLString) else {
             print("error in urlComponents")
             return
@@ -76,6 +81,10 @@ final class WebViewViewController: UIViewController {
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+    }
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        delegate?.webViewViewControllerDidCancel(self)
     }
 }
 
