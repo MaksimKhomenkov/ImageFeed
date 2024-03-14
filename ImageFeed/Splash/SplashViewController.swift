@@ -53,6 +53,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 self.switchToTabBarController()
             case .failure:
+                print("Authenticate failed")
                 break
             }
         }
