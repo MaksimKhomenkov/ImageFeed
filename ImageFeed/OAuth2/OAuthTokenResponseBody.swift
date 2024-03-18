@@ -1,8 +1,14 @@
 import Foundation
 
-struct OAuthTokenResponseBody: Codable {
-    let access_token: String
-    let token_type: String
-    let scope: String
-    let created_at: Int
-}
+struct OAuthTokenResponseBody: Decodable {
+        let accessToken: String
+        let tokenType: String
+        let scope: String
+        let createdAt: Int
+        enum CodingKeys: String, CodingKey {
+            case accessToken = "access_token"
+            case tokenType = "token_type"
+            case scope
+            case createdAt = "created_at"
+        }
+    }

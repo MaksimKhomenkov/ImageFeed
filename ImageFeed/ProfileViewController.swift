@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -6,11 +7,29 @@ final class ProfileViewController: UIViewController {
     private let nameLabel = UILabel()
     private let nickNameLabel = UILabel()
     private let statusLabel = UILabel()
-    private let logoutButton = UIButton.systemButton(
-        with: UIImage(imageLiteralResourceName: "logoutButton"),
-        target: ProfileViewController.self,
-        action: #selector(Self.didTapButton)
-    )
+//    private let logoutButton = UIButton.systemButton(
+//        with: UIImage(imageLiteralResourceName: "logoutButton"),
+//        target: ProfileViewController.self,
+//        action: #selector(Self.didTapButton)
+//    )
+    private let logoutButton = UIButton.systemButton(with: UIImage(imageLiteralResourceName: "logoutButton"), target: nil, action: nil)
+    private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+    private var storage = OAuth2TokenStorage()
+    
+    override init(nibName: String?, bundle: Bundle?) {
+        super.init(nibName: nibName, bundle: bundle)
+        addObserver()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        addObserver()
+    }
+    
+    deinit {
+        removeObserver()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +40,73 @@ final class ProfileViewController: UIViewController {
         addNickName()
         addStatus()
         addLogoutButton()
+        
+        guard let profile = profileService.profile else { return }
+        updateProfileDetails(profile: profile)
+        
+        if let avatarURL = ProfileImageService.shared.avatarURL,
+           let url = URL(string: avatarURL) {
+            updateAvatar(url: url)
+        }
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] notification in
+                self?.updateAvatar(notification: notification)
+            }
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateAvatar(notification:)),
+            name: ProfileImageService.didChangeNotification,
+            object: nil)
+    }
+    
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(
+        self,
+        name: ProfileImageService.didChangeNotification,
+        object: nil)
+    }
+    
+    @objc
+    private func updateAvatar(notification: Notification) {
+        guard
+            isViewLoaded,
+            let userInfo = notification.userInfo,
+            let profileImageURL = userInfo["URL"] as? String,
+            let url = URL(string: profileImageURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35, backgroundColor: .clear)
+        profilePhotoImageView.kf.indicatorType = .activity
+        profilePhotoImageView.kf.setImage(with: url,
+                                          placeholder: UIImage(systemName: "person.crop.circle.fill"),
+                                          options: [.processor(processor),
+                                                    .cacheSerializer(FormatIndicatedCacheSerializer.png)]) {result in
+                                                        switch result {
+                                                        case.success(let value):
+                                                            print(value.image)
+                                                            print(value.cacheType)
+                                                            print(value.source)
+                                                        case .failure(let error):
+                                                            print(error)
+                                                        }
+                                                    }
+    }
+    
+    private func updateAvatar(url: URL) {
+        profilePhotoImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
     }
     
     private func addProfilePhotoImageView() {
         profilePhotoImageView.image = UIImage(named: "avatar")
+        profilePhotoImageView.layer.cornerRadius = 35
+        profilePhotoImageView.clipsToBounds = true
         
         profilePhotoImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(profilePhotoImageView)
@@ -72,6 +154,8 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addLogoutButton() {
+        logoutButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
         logoutButton.tintColor = UIColor(named: "YP Red")
         
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
@@ -83,8 +167,15 @@ final class ProfileViewController: UIViewController {
         logoutButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
     }
     
+    private func updateProfileDetails(profile: Profile) {
+        self.nameLabel.text = profile.name
+        self.nickNameLabel.text = profile.userName
+        self.statusLabel.text = profile.bio
+        
+    }
+    
     @objc
     private func didTapButton() {
-//        TODO
+//        TODO - выход из профиля
     }
 }

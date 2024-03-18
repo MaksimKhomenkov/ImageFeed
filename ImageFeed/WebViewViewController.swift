@@ -61,7 +61,6 @@ final class WebViewViewController: UIViewController {
             print("error in urlComponents")
             return
         }
-        
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: accessKey),
             URLQueryItem(name: "redirect_uri", value: redirectURI),
