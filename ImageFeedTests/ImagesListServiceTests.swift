@@ -2,11 +2,10 @@
 //  ImageFeedTests.swift
 //  ImageFeedTests
 //
-//  Created by Максим Хоменков on 15.01.2024.
+//  Created by Максим Хоменков on 19.03.24.
 //
 
 import XCTest
-@testable import ImageFeed
 
 final class ImageFeedTests: XCTestCase {
 
@@ -28,7 +27,7 @@ final class ImageFeedTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
