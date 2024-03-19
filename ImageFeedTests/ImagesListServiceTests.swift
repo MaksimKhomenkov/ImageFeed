@@ -4,32 +4,27 @@
 //
 //  Created by Максим Хоменков on 19.03.24.
 //
-
+@testable import ImageFeed
 import XCTest
 
-final class ImageFeedTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+final class ImagesListServiceTests: XCTestCase {
+    func testExample() {
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testFetchPhotos() {
+        let service = ImagesListService()
+        
+        let expectation = self.expectation(description: "Wait for Notification")
+        NotificationCenter.default.addObserver(
+            forName: ImagesListService.didChangeNotification,
+            object: nil,
+            queue: .main) { _ in
+                expectation.fulfill()
+            }
+        
+        service.fetchPhotosNextPage()
+        wait(for: [expectation], timeout: 10)
+        
+        XCTAssertEqual(service.photos.count, 10)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
