@@ -5,8 +5,9 @@ extension URLRequest {
         path: String,
         httpMethod: String,
         baseURL: URL = defaultBaseURL
-    ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
+    ) -> URLRequest? {
+        guard let url = URL(string: path, relativeTo: baseURL) else { return nil }
+        var request = URLRequest(url: url)
         request.httpMethod = httpMethod
         return request
     }
