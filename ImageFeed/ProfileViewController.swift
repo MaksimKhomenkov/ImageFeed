@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
@@ -7,11 +8,6 @@ final class ProfileViewController: UIViewController {
     private let nameLabel = UILabel()
     private let nickNameLabel = UILabel()
     private let statusLabel = UILabel()
-//    private let logoutButton = UIButton.systemButton(
-//        with: UIImage(imageLiteralResourceName: "logoutButton"),
-//        target: ProfileViewController.self,
-//        action: #selector(Self.didTapButton)
-//    )
     private let logoutButton = UIButton.systemButton(with: UIImage(imageLiteralResourceName: "logoutButton"), target: nil, action: nil)
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -176,6 +172,53 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapButton() {
-//        TODO - выход из профиля
+        self.exitAlert()
+    }
+    
+    private func exitAlert() {
+        let alertController = UIAlertController(title: "Пока, пока!",
+                                                message: "Уверены, что хотите выйти?",
+                                                preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Нет",
+                                   style: .cancel)
+        let action = UIAlertAction(title: "Да",
+                                   style: .default) { _ in
+            self.cleanToken()
+            self.cleanCookies()
+            self.cleanUserData()
+            self.goToSplashViewController()
+        }
+        alertController.addAction(action)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
+    }
+}
+
+extension ProfileViewController {
+    private func cleanToken() {
+        storage.removeToken()
+    }
+    
+    private func cleanCookies() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) {
+            records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+    }
+    
+    private func cleanUserData() {
+        self.nameLabel.text = "Name"
+        self.nickNameLabel.text = "@name"
+        self.statusLabel.text = "bio"
+        self.profilePhotoImageView.image = UIImage(named: "Avatar")
+        ImagesListService.shared.deletePhotos()
+    }
+    
+    private func goToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
+        window.rootViewController = SplashViewController()
     }
 }
