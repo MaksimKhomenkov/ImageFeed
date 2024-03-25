@@ -9,8 +9,6 @@ final class ImagesListViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMMM yyyy"
         formatter.locale = Locale(identifier: "ru_RU")
-//        formatter.dateStyle = .long
-//        formatter.timeStyle = .none
         return formatter
     }()
     private var photos: [Photo] = []

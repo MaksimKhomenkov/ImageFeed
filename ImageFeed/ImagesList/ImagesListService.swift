@@ -47,6 +47,7 @@ final class ImagesListService {
                 print("[ImagesListService]: \(error.localizedDescription) \(request)")
             }
         }
+        task?.resume()
     }
     
     private func createURLRequest(page: Int) -> URLRequest? {
