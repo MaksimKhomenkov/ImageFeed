@@ -72,8 +72,8 @@ final class SingleImageViewController: UIViewController {
         let action = UIAlertAction(
             title: "Повторить",
             style: .default
-        ) { _ in
-            self.fetchSingleImage()
+        ) { [weak self] _ in
+            self?.fetchSingleImage()
         }
         alertController.addAction(action)
         alertController.addAction(cancel)
