@@ -7,10 +7,11 @@ protocol ImagesListCellDelegate: AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
+    weak var delegate: ImagesListCellDelegate?
     @IBOutlet private var cellImage: UIImageView!
     @IBOutlet private var likeButton: UIButton!
     @IBOutlet private var dateLabel: UILabel!
-    weak var delegate: ImagesListCellDelegate?
+   
     override func prepareForReuse() {
         super.prepareForReuse()
         cellImage.kf.cancelDownloadTask()

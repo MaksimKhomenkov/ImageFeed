@@ -19,6 +19,7 @@ final class ImagesListService {
         let formatter = ISO8601DateFormatter()
         return formatter
     }()
+    private init() {}
     
     func fetchPhotosNextPage() {
         let nextPage = (lastLoadedPage ?? 0) + 1
@@ -84,11 +85,12 @@ final class ImagesListService {
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<ResultPhotoWhenLike, Error>) -> Void) {
         guard let request = createLikeURLRequest(id: photoId, isLike: isLike) else { return }
         task = URLSession.shared.objectTask(for: request) { [weak self] (response:
-            Result<ResultPhotoWhenLike, Error>) in
-            guard let self = self else { return }
-            switch response {
-            case .success(let body):
-                DispatchQueue.main.async {
+                                                                            Result<ResultPhotoWhenLike, Error>) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch response {
+                case .success(let body):
+                    
                     if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                         let photo = self.photos[index]
                         let newPhoto = Photo(
@@ -102,10 +104,10 @@ final class ImagesListService {
                         )
                         self.photos[index] = newPhoto
                     }
+                    completion(.success(body))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-                completion(.success(body))
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
     }

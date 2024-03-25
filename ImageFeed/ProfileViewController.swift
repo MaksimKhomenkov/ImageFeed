@@ -182,11 +182,11 @@ final class ProfileViewController: UIViewController {
         let cancel = UIAlertAction(title: "Нет",
                                    style: .cancel)
         let action = UIAlertAction(title: "Да",
-                                   style: .default) { _ in
-            self.cleanToken()
-            self.cleanCookies()
-            self.cleanUserData()
-            self.goToSplashViewController()
+                                   style: .default) { [weak self] _ in
+            self?.cleanToken()
+            self?.cleanCookies()
+            self?.cleanUserData()
+            self?.goToSplashViewController()
         }
         alertController.addAction(action)
         alertController.addAction(cancel)
@@ -210,10 +210,10 @@ extension ProfileViewController {
     }
     
     private func cleanUserData() {
-        self.nameLabel.text = "Name"
-        self.nickNameLabel.text = "@name"
-        self.statusLabel.text = "bio"
-        self.profilePhotoImageView.image = UIImage(named: "Avatar")
+        self.nameLabel.text = nil
+        self.nickNameLabel.text = nil
+        self.statusLabel.text = nil
+        ProfileImageService.shared.deleteAvatar()
         ImagesListService.shared.deletePhotos()
     }
     
