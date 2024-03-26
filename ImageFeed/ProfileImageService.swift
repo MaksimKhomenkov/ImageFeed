@@ -18,20 +18,21 @@ final class ProfileImageService {
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     func fetchProfileImageURL(username: String, token: String, _ completion: @escaping (Result<String?, Error>) -> Void) {
-        guard let request = createURLRequest(with: token, username: username) else { return }
-        
-        assert(Thread.isMainThread)
         
         if task != nil {
             task?.cancel()
         }
+        
+        guard let request = createURLRequest(with: token, username: username) else { return }
+        
+        assert(Thread.isMainThread)
         
         task = URLSession.shared.objectTask(for: request) { [weak self] (response: Result<UserResult, Error>) in
         
             self?.task = nil
             switch response {
             case .success(let body):
-                self?.avatarURL = body.profile_image?.medium
+                self?.avatarURL = body.profileImage?.medium
                 completion(.success(self?.avatarURL))
                 
                 NotificationCenter.default
@@ -58,5 +59,9 @@ final class ProfileImageService {
         
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
+    }
+    
+    func deleteAvatar() {
+        avatarURL = nil
     }
 }

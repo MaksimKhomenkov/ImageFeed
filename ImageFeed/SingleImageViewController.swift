@@ -1,4 +1,6 @@
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     
@@ -10,17 +12,18 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    var imageUrl: URL?
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
+        fetchSingleImage()
         scrollView.delegate = self
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
-        rescaleAndCenterImageInScrollView(image: image)
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
@@ -40,6 +43,43 @@ final class SingleImageViewController: UIViewController {
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
     
+    private func fetchSingleImage() {
+        ProgressHUD.animate()
+        imageView.kf.setImage(with: imageUrl) { [weak self] result in
+            ProgressHUD.dismiss()
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                self.image = image.image
+                self.rescaleAndCenterImageInScrollView(image: self.image)
+            case .failure(let error):
+                print("[fetchSingleImage]: \(error.localizedDescription)")
+                self.showError()
+            }
+        }
+    }
+    
+    private func showError() {
+        let alertController = UIAlertController(
+            title: "Что-то пошло не так.",
+            message: "Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        let cancel = UIAlertAction(
+            title: "Не надо",
+            style: .default
+        )
+        let action = UIAlertAction(
+            title: "Повторить",
+            style: .default
+        ) { [weak self] _ in
+            self?.fetchSingleImage()
+        }
+        alertController.addAction(action)
+        alertController.addAction(cancel)
+        present(alertController, animated: true)
+    }
+    
     @IBAction private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
@@ -48,7 +88,7 @@ final class SingleImageViewController: UIViewController {
             activityItems: [image as Any],
             applicationActivities: nil
         )
-        present(shareImage, animated: true, completion: nil)
+        present(shareImage, animated: true)
     }
 }
 

@@ -43,6 +43,9 @@
                                                     <rect key="frame" x="372" y="4" width="42" height="42"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="LikeButtonActive"/>
+                                                    <connections>
+                                                        <action selector="likeButtonTap:" destination="ILB-Ja-Azb" eventType="touchUpInside" id="Zxb-OE-fr8"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GzS-Gp-fYF" userLabel="Date Label">
                                                     <rect key="frame" x="24.000000000000007" y="196" width="101.66666666666669" height="16"/>
@@ -65,9 +68,9 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="ypBlack"/>
                                         <connections>
-                                            <outlet property="cellImage" destination="Z4p-W7-5b7" id="cST-c2-QMK"/>
-                                            <outlet property="dateLabel" destination="GzS-Gp-fYF" id="xhK-YI-kOG"/>
-                                            <outlet property="likeButton" destination="rRu-fl-3pd" id="P3g-gO-Rma"/>
+                                            <outlet property="cellImage" destination="Z4p-W7-5b7" id="H2u-b6-eWa"/>
+                                            <outlet property="dateLabel" destination="GzS-Gp-fYF" id="hwD-s4-9Pc"/>
+                                            <outlet property="likeButton" destination="rRu-fl-3pd" id="Ac6-xo-tsD"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -288,8 +291,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="8S5-HJ-iVL" userLabel="Navigation Item"/>
                     <connections>
-                        <outlet property="progressView" destination="VQ8-9r-HlT" id="yN8-Qz-ZV2"/>
-                        <outlet property="webView" destination="NLA-Mh-bSn" id="anU-fA-4g8"/>
+                        <outlet property="progressView" destination="VQ8-9r-HlT" id="jFL-AN-Dzi"/>
+                        <outlet property="webView" destination="NLA-Mh-bSn" id="n99-Fd-qsQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbT-H2-71N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
