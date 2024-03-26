@@ -47,7 +47,6 @@ final class ImagesListService {
                 print("[ImagesListService]: \(error.localizedDescription) \(request)")
             }
         }
-        task?.resume()
     }
     
     private func createURLRequest(page: Int) -> URLRequest? {
@@ -81,6 +80,8 @@ final class ImagesListService {
     
     func deletePhotos() {
         photos.removeAll()
+        lastLoadedPage = nil
+        task = nil
     }
     
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<ResultPhotoWhenLike, Error>) -> Void) {
