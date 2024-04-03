@@ -43,6 +43,7 @@
 		73A17E012BAA0D3200203948 /* PhotoStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A17E002BAA0D3200203948 /* PhotoStruct.swift */; };
 		73A17E032BAA0E2B00203948 /* PhotoRequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A17E022BAA0E2B00203948 /* PhotoRequestResult.swift */; };
 		73A17E052BAA10EB00203948 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A17E042BAA10EB00203948 /* ImagesListService.swift */; };
+		73AF4F232BBDF54300DE3A8F /* ImagesListViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AF4F222BBDF54200DE3A8F /* ImagesListViewPresenter.swift */; };
 		73C026222B6ACD66004F98C0 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C026212B6ACD66004F98C0 /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,7 @@
 		73A17E002BAA0D3200203948 /* PhotoStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStruct.swift; sourceTree = "<group>"; };
 		73A17E022BAA0E2B00203948 /* PhotoRequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoRequestResult.swift; sourceTree = "<group>"; };
 		73A17E042BAA10EB00203948 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
+		73AF4F222BBDF54200DE3A8F /* ImagesListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewPresenter.swift; sourceTree = "<group>"; };
 		73C026212B6ACD66004F98C0 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +267,7 @@
 			children = (
 				73C026212B6ACD66004F98C0 /* ImagesListCell.swift */,
 				7364E7AF2B54F9D700EDD5B0 /* ImagesListViewController.swift */,
+				73AF4F222BBDF54200DE3A8F /* ImagesListViewPresenter.swift */,
 				73A17E042BAA10EB00203948 /* ImagesListService.swift */,
 				73A17E002BAA0D3200203948 /* PhotoStruct.swift */,
 				73A17E022BAA0E2B00203948 /* PhotoRequestResult.swift */,
@@ -439,6 +442,7 @@
 				7392F95C2B99D1FD00FC6FC3 /* URLSession+data.swift in Sources */,
 				73A17E032BAA0E2B00203948 /* PhotoRequestResult.swift in Sources */,
 				7364E7AE2B54F9D700EDD5B0 /* SceneDelegate.swift in Sources */,
+				73AF4F232BBDF54300DE3A8F /* ImagesListViewPresenter.swift in Sources */,
 				734496552BA39AD80073B6C3 /* TabBarController.swift in Sources */,
 				736BFAE32B75902200B8CD70 /* SingleImageViewController.swift in Sources */,
 				7392F95A2B99D10800FC6FC3 /* OAuthTokenResponseBody.swift in Sources */,
