@@ -22,6 +22,7 @@
 		7360895C2BBB0919003FB291 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7360895B2BBB0919003FB291 /* WebViewPresenter.swift */; };
 		7360895E2BBDA138003FB291 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7360895D2BBDA138003FB291 /* AuthHelper.swift */; };
 		736089602BBDAC8A003FB291 /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7360895F2BBDAC8A003FB291 /* WebViewTests.swift */; };
+		736089622BBDC3EB003FB291 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736089612BBDC3EB003FB291 /* ProfileViewPresenter.swift */; };
 		7364E7AC2B54F9D700EDD5B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AB2B54F9D700EDD5B0 /* AppDelegate.swift */; };
 		7364E7AE2B54F9D700EDD5B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AD2B54F9D700EDD5B0 /* SceneDelegate.swift */; };
 		7364E7B02B54F9D700EDD5B0 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7364E7AF2B54F9D700EDD5B0 /* ImagesListViewController.swift */; };
@@ -75,6 +76,7 @@
 		7360895B2BBB0919003FB291 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		7360895D2BBDA138003FB291 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		7360895F2BBDAC8A003FB291 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
+		736089612BBDC3EB003FB291 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
 		7364E7A82B54F9D700EDD5B0 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7364E7AB2B54F9D700EDD5B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7364E7AD2B54F9D700EDD5B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			children = (
 				735F20752B753B1700CBC796 /* ProfileViewController.swift */,
 				7344964B2BA37E700073B6C3 /* ProfileStructs.swift */,
+				736089612BBDC3EB003FB291 /* ProfileViewPresenter.swift */,
 				734496562BA39D800073B6C3 /* Service */,
 			);
 			name = Profile;
@@ -429,6 +432,7 @@
 				7364E7AC2B54F9D700EDD5B0 /* AppDelegate.swift in Sources */,
 				73A17E012BAA0D3200203948 /* PhotoStruct.swift in Sources */,
 				7344964C2BA37E700073B6C3 /* ProfileStructs.swift in Sources */,
+				736089622BBDC3EB003FB291 /* ProfileViewPresenter.swift in Sources */,
 				7392F95E2B99D5EF00FC6FC3 /* URLRequest.swift in Sources */,
 				7360895E2BBDA138003FB291 /* AuthHelper.swift in Sources */,
 				735F20762B753B1700CBC796 /* ProfileViewController.swift in Sources */,

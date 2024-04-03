@@ -2,6 +2,13 @@ import UIKit
 import Kingfisher
 import WebKit
 
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateAvatar(url: URL)
+    func updateProfileDetails(profile: Profile)
+    func cleanUserData()
+}
+
 final class ProfileViewController: UIViewController {
     
     private let profilePhotoImageView = UIImageView()
@@ -9,9 +16,8 @@ final class ProfileViewController: UIViewController {
     private let nickNameLabel = UILabel()
     private let statusLabel = UILabel()
     private let logoutButton = UIButton.systemButton(with: UIImage(imageLiteralResourceName: "logoutButton"), target: nil, action: nil)
-    private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
-    private var storage = OAuth2TokenStorage()
+    var presenter: ProfileViewPresenterProtocol?
     
     override init(nibName: String?, bundle: Bundle?) {
         super.init(nibName: nibName, bundle: bundle)
@@ -36,15 +42,7 @@ final class ProfileViewController: UIViewController {
         addNickName()
         addStatus()
         addLogoutButton()
-        
-        guard let profile = profileService.profile else { return }
-        updateProfileDetails(profile: profile)
-        
-        if let avatarURL = ProfileImageService.shared.avatarURL,
-           let url = URL(string: avatarURL) {
-            updateAvatar(url: url)
-        }
-        
+        presenter?.viewDidLoad()
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,
@@ -63,9 +61,9 @@ final class ProfileViewController: UIViewController {
     
     private func removeObserver() {
         NotificationCenter.default.removeObserver(
-        self,
-        name: ProfileImageService.didChangeNotification,
-        object: nil)
+            self,
+            name: ProfileImageService.didChangeNotification,
+            object: nil)
     }
     
     @objc
@@ -93,14 +91,8 @@ final class ProfileViewController: UIViewController {
                                                     }
     }
     
-    private func updateAvatar(url: URL) {
-        profilePhotoImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 35)
-        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
-    }
-    
     private func addProfilePhotoImageView() {
-        profilePhotoImageView.image = UIImage(named: "avatar")
+        profilePhotoImageView.image = UIImage(systemName: "person.circle")
         profilePhotoImageView.layer.cornerRadius = 35
         profilePhotoImageView.clipsToBounds = true
         
@@ -114,7 +106,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addNameLabel() {
-        nameLabel.text = "Екатерина Новикова"
+        nameLabel.text = "Name LastName"
         nameLabel.textColor = UIColor(named: "YP White")
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
         
@@ -126,7 +118,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addNickName() {
-        nickNameLabel.text = "@ekaterina_nov"
+        nickNameLabel.text = "@userName"
         nickNameLabel.textColor = UIColor(named: "YP Gray")
         nickNameLabel.font = nickNameLabel.font.withSize(13)
         
@@ -163,15 +155,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.centerYAnchor.constraint(equalTo: profilePhotoImageView.centerYAnchor).isActive = true
     }
     
-    private func updateProfileDetails(profile: Profile) {
-        self.nameLabel.text = profile.name
-        self.nickNameLabel.text = profile.userName
-        self.statusLabel.text = profile.bio
-        
-    }
-    
-    @objc
-    private func didTapButton() {
+    @objc private func didTapButton() {
         self.exitAlert()
     }
     
@@ -183,10 +167,7 @@ final class ProfileViewController: UIViewController {
                                    style: .cancel)
         let action = UIAlertAction(title: "Да",
                                    style: .default) { [weak self] _ in
-            self?.cleanToken()
-            self?.cleanCookies()
-            self?.cleanUserData()
-            self?.goToSplashViewController()
+            self?.presenter?.clearUserInfo()
         }
         alertController.addAction(action)
         alertController.addAction(cancel)
@@ -194,31 +175,24 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-extension ProfileViewController {
-    private func cleanToken() {
-        storage.removeToken()
+extension ProfileViewController: ProfileViewControllerProtocol {
+    
+    func cleanUserData() {
+        self.nameLabel.text = "Name"
+        self.nickNameLabel.text = "@name"
+        self.statusLabel.text = "bio"
+        self.profilePhotoImageView.image = UIImage(named: "avatar")
     }
     
-    private func cleanCookies() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) {
-            records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
+    func updateAvatar(url: URL) {
+        profilePhotoImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profilePhotoImageView.kf.setImage(with: url, options: [.processor(processor)])
     }
     
-    private func cleanUserData() {
-        self.nameLabel.text = nil
-        self.nickNameLabel.text = nil
-        self.statusLabel.text = nil
-        ProfileImageService.shared.deleteAvatar()
-        ImagesListService.shared.deletePhotos()
-    }
-    
-    private func goToSplashViewController() {
-        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
-        window.rootViewController = SplashViewController()
+    func updateProfileDetails(profile: Profile) {
+        self.nameLabel.text = profile.name
+        self.nickNameLabel.text = profile.userName
+        self.statusLabel.text = profile.bio
     }
 }
