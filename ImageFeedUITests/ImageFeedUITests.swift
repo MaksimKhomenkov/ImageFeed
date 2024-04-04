@@ -23,13 +23,13 @@ final class ImageFeedUITests: XCTestCase {
         let loginTextField = webView.descendants(matching: .textField).element
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 10))
         loginTextField.tap()
-        loginTextField.typeText("") // e-mail
+        loginTextField.typeText("masyk2010@gmail.com") // e-mail
         webView.swipeUp()
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 10))
         passwordTextField.tap()
-        passwordTextField.typeText("") // password
+        passwordTextField.typeText("03150315Maks") // password
         webView.swipeUp()
         
         webView.buttons["Login"].tap()
@@ -41,12 +41,11 @@ final class ImageFeedUITests: XCTestCase {
     func testFeed() throws {
         sleep(3)
         let tablesQuery = app.tables
-        XCTAssertTrue(tablesQuery.element.waitForExistence(timeout: 10))
         
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
         
-        sleep(10)
+        sleep(5)
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         XCTAssert(cellToLike.waitForExistence(timeout: 5))
@@ -74,8 +73,8 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
         
-        XCTAssertTrue(app.staticTexts["Name LastName"].exists) // name lastname
-        XCTAssertTrue(app.staticTexts["@user"].exists) // @username
+        XCTAssertTrue(app.staticTexts["maksim homenkov"].exists) // name lastname
+        XCTAssertTrue(app.staticTexts["maks223344"].exists) // @username
         
         app.buttons["logoutButton"].tap()
         
