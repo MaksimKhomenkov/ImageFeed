@@ -42,7 +42,7 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         let tablesQuery = app.tables
         
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
         
         sleep(5)
@@ -50,7 +50,7 @@ final class ImageFeedUITests: XCTestCase {
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         XCTAssertTrue(cellToLike.waitForExistence(timeout: 5))
         
-//        sleep(3)
+        sleep(3)
         cellToLike.buttons["like_button"].tap()
         sleep(5)
         
@@ -79,5 +79,8 @@ final class ImageFeedUITests: XCTestCase {
         app.buttons["logoutButton"].tap()
         
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
+        sleep(3)
+        
+        XCTAssertTrue(app.buttons.element.waitForExistence(timeout: 5))
     }
 }
