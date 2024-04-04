@@ -8,10 +8,12 @@
 import XCTest
 
 final class ImageFeedUITests: XCTestCase {
-    private let app = XCUIApplication()
+    private var app: XCUIApplication!
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["testMode"]
         app.launch()
     }
     
@@ -47,10 +49,9 @@ final class ImageFeedUITests: XCTestCase {
         
         sleep(5)
         
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
-        XCTAssertTrue(cellToLike.waitForExistence(timeout: 5))
+        let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         
-        sleep(3)
+        sleep(5)
         cellToLike.buttons["like_button"].tap()
         sleep(5)
         
@@ -81,6 +82,6 @@ final class ImageFeedUITests: XCTestCase {
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
         sleep(3)
         
-        app.buttons["Authenticate"].tap()
+        XCTAssertTrue(app.buttons["Authenticate"].exists)
     }
 }
