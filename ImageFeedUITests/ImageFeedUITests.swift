@@ -81,6 +81,6 @@ final class ImageFeedUITests: XCTestCase {
         app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
         sleep(3)
         
-        XCTAssertTrue(app.buttons.element.waitForExistence(timeout: 5))
+        app.buttons["Authenticate"].tap()
     }
 }
