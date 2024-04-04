@@ -26,13 +26,15 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 10))
         loginTextField.tap()
         loginTextField.typeText("") // e-mail
-        webView.swipeUp()
+//        webView.swipeUp()
+        app.toolbars.buttons["Done"].tap() // скрывает клавиатуру ввода на симуляторе
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 10))
         passwordTextField.tap()
         passwordTextField.typeText("") // password
-        webView.swipeUp()
+//        webView.swipeUp()
+        app.toolbars.buttons["Done"].tap()
         
         webView.buttons["Login"].tap()
         let tablesQuery = app.tables
