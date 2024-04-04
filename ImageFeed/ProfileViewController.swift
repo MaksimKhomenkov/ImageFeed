@@ -106,7 +106,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addNameLabel() {
-        nameLabel.text = "Name LastName"
+        nameLabel.text = "Name Lastname"
         nameLabel.textColor = UIColor(named: "YP White")
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
         
@@ -118,7 +118,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func addNickName() {
-        nickNameLabel.text = "@userName"
+        nickNameLabel.text = "@username"
         nickNameLabel.textColor = UIColor(named: "YP Gray")
         nickNameLabel.font = nickNameLabel.font.withSize(13)
         
@@ -143,7 +143,7 @@ final class ProfileViewController: UIViewController {
     
     private func addLogoutButton() {
         logoutButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-        
+        logoutButton.accessibilityIdentifier = "logoutButton"
         logoutButton.tintColor = UIColor(named: "YP Red")
         
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
