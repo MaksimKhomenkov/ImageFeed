@@ -48,13 +48,13 @@ final class ImageFeedUITests: XCTestCase {
         sleep(5)
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
-        XCTAssert(cellToLike.waitForExistence(timeout: 5))
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 5))
         
-        let likeButton = cellToLike.buttons["Like Button"]
-        likeButton.tap()
+//        sleep(3)
+        cellToLike.buttons["like_button"].tap()
         sleep(5)
         
-        likeButton.tap()
+        cellToLike.buttons["like_button"].tap()
         sleep(5)
         
         cellToLike.tap()
@@ -70,7 +70,7 @@ final class ImageFeedUITests: XCTestCase {
     }
     
     func testProfile() throws {
-        sleep(3)
+        sleep(5)
         app.tabBars.buttons.element(boundBy: 1).tap()
         
         XCTAssertTrue(app.staticTexts[""].exists) // name lastname
