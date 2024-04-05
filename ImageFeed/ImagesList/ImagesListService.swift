@@ -88,10 +88,11 @@ final class ImagesListService {
         guard let request = createLikeURLRequest(id: photoId, isLike: isLike) else { return }
         task = URLSession.shared.objectTask(for: request) { [weak self] (response:
                                                                             Result<ResultPhotoWhenLike, Error>) in
-                guard let self = self else { return }
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 switch response {
                 case .success(let body):
+                    
                     if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                         let photo = self.photos[index]
                         let newPhoto = Photo(
